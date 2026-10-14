@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Um mentor de carreiras interativo para explorar caminhos profissionais em tecnologia.">
+  <title>Mentor de Carreiras com IA</title>
+
+  <style>
+    :root {
+      --fundo: #0c1020;
+      --cartao: #171d32;
+      --texto: #f3f4f8;
+      --suave: #aab2c8;
+      --destaque: #8b7cff;
+      --borda: #2b3450;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 32px 16px;
+      background:
+        radial-gradient(ellipse at top, #25204c 0, transparent 45%),
+        var(--fundo);
+      color: var(--texto);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    main {
+      width: min(760px, 100%);
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .etiqueta {
+      display: inline-block;
+      padding: 7px 12px;
+      border: 1px solid var(--borda);
+      border-radius: 999px;
+      color: #c9c2ff;
+      font-size: 0.85rem;
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+    }
+
+    header p,
+    .descricao {
+      color: var(--suave);
+      line-height: 1.6;
+    }
+
+    .cartao {
+      padding: clamp(20px, 5vw, 36px);
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      background: rgba(23, 29, 50, 0.94);
+      box-shadow: 0 18px 60px #0005;
+    }
+
+    .campo {
+      margin: 22px 0;
+    }
+
+    label,
+    legend {
+      display: block;
+      margin-bottom: 9px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--borda);
+      border-radius: 10px;
+      background: #10162a;
+      color: var(--texto);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    fieldset {
+      margin: 22px 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .opcoes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .opcao {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--borda);
+      border-radius: 10px;
+      background: #10162a;
+      cursor: pointer;
+    }
+
+    .opcao input {
+      width: auto;
+      accent-color: var(--destaque);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--destaque);
+      color: white;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #7666f2;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid #b7afff;
+      outline-offset: 2px;
+    }
+
+    #resultado {
+      display: none;
+      margin-top: 24px;
+      padding: 22px;
+      border: 1px solid #51479b;
+      border-radius: 14px;
+      background: #211e40;
+      line-height: 1.65;
+    }
+
+    #resultado h2 {
+      margin-top: 0;
+      color: #c9c2ff;
+    }
+
+    #resultado ul {
+      padding-left: 22px;
+    }
+
+    .aviso {
+      margin-top: 18px;
+      color: var(--suave);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <span class="etiqueta">Projeto de programação com IA</span>
+      <h1>Seu mentor de carreiras</h1>
+      <p>Descubra caminhos em tecnologia que combinam com seus interesses e objetivos.</p>
+    </header>
+
+    <section class="cartao" aria-labelledby="titulo-formulario">
+      <h2 id="titulo-formulario">Vamos começar?</h2>
+      <p class="descricao">Conte um pouco sobre você para receber uma sugestão personalizada.</p>
+
+      <form id="formulario">
+        <div class="campo">
+          <label for="nome">Como podemos chamar você?</label>
+          <input id="nome" name="nome" type="text" placeholder="Seu nome" required>
+        </div>
+
+        <div class="campo">
+          <label for="experiencia">Qual é sua experiência com tecnologia?</label>
+          <select id="experiencia" name="experiencia" required>
+            <option value="">Selecione uma opção</option>
+            <option value="iniciante">Estou começando agora</option>
+            <option value="basica">Já estudei um pouco</option>
+            <option value="experiente">Já tenho experiência</option>
+          </select>
+        </div>
+
+        <fieldset>
+          <legend>Quais atividades mais interessam a você?</legend>
+          <div class="opcoes">
+            <label class="opcao">
+              <input type="checkbox" name="interesses" value="visual">
+              Criar interfaces e experiências visuais
+            </label>
+            <label class="opcao">
+              <input type="checkbox" name="interesses" value="logica">
+              Resolver problemas com lógica e código
+            </label>
+            <label class="opcao">
+              <input type="checkbox" name="interesses" value="dados">
+              Analisar dados e encontrar padrões
+            </label>
+            <label class="opcao">
+              <input type="checkbox" name="interesses" value="pessoas">
+              Ajudar pessoas e entender necessidades
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="campo">
+          <label for="objetivo">Qual é seu principal objetivo?</label>
+          <textarea id="objetivo" name="objetivo" placeholder="Ex.: conseguir meu primeiro emprego na área..."></textarea>
+        </div>
+
+        <button type="submit">Receber minha recomendação</button>
+      </form>
+
+      <section id="resultado" aria-live="polite"></section>
+
+      <p class="aviso">
+        Este projeto apresenta uma recomendação demonstrativa baseada nas respostas.
+        Uma integração real com IA exigiria um serviço de backend e uma API.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const formulario = document.querySelector("#formulario");
+    const resultado = document.querySelector("#resultado");
+
+    formulario.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+
+      const nome = document.querySelector("#nome").value.trim();
+      const experiencia = document.querySelector("#experiencia").value;
+      const objetivo = document.querySelector("#objetivo").value.trim();
+      const interesses = [
+        ...document.querySelectorAll('input[name="interesses"]:checked')
+      ].map((item) => item.value);
+
+      let carreira = "Desenvolvimento de software";
+      let motivo = "Você pode gostar de transformar ideias em soluções digitais.";
+      let estudos = ["Lógica de programação", "JavaScript", "Git e GitHub"];
+
+      if (interesses.includes("visual")) {
+        carreira = "Desenvolvimento Front-end";
+        motivo = "Seu interesse por interfaces pode combinar com a criação de sites e aplicativos.";
+        estudos = ["HTML e CSS", "JavaScript", "Acessibilidade e design responsivo"];
+      } else if (interesses.includes("dados")) {
+        carreira = "Análise de dados";
+        motivo = "Seu interesse por padrões pode combinar com a exploração e interpretação de dados.";
+        estudos = ["Planilhas e SQL", "Python", "Visualização de dados"];
+      } else if (interesses.includes("pessoas")) {
+        carreira = "UX/UI Design";
+        motivo = "Seu interesse por pessoas pode combinar com a criação de experiências digitais úteis.";
+        estudos = ["Pesquisa com usuários", "Fundamentos de UX/UI", "Prototipação"];
+      } else if (interesses.includes("logica")) {
+        carreira = "Desenvolvimento Back-end";
+        motivo = "Seu interesse por lógica pode combinar com sistemas, regras de negócio e APIs.";
+        estudos = ["Lógica de programação", "Uma linguagem como Python ou JavaScript", "APIs e bancos de dados"];
+      }
+
+      const nivel = experiencia === "iniciante"
+        ? "Comece com projetos pequenos e pratique um pouco a cada semana."
+        : experiencia === "basica"
+          ? "Aprofunde os fundamentos e construa projetos para seu portfólio."
+          : "Considere projetos mais avançados e contribuições para projetos reais.";
+
+      resultado.innerHTML = `
+        <h2>Uma ideia para você, ${escaparHTML(nome)}!</h2>
+        <p><strong>Carreira para explorar:</strong> ${carreira}</p>
+        <p>${motivo}</p>
+        <p><strong>Próximos assuntos para estudar:</strong></p>
+        <ul>${estudos.map((item) => `<li>${item}</li>`).join("")}</ul>
+        <p>${nivel}</p>
+        ${objetivo ? `<p><strong>Seu objetivo:</strong> ${escaparHTML(objetivo)}</p>` : ""}
+      `;
+
+      resultado.style.display = "block";
+      resultado.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    function escaparHTML(texto) {
+      return texto.replace(/[&<>"']/g, (caractere) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[caractere]);
+    }
+  </script>
+</body>
+</html>
